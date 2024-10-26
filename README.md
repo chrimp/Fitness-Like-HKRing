@@ -2,6 +2,8 @@
 
 This iOS application uses [HKActivitiyRingView](https://developer.apple.com/documentation/healthkit/hkactivityringview) with @State bound to Stepper to show how to display specific date's (n days ago) activity goals.
 
+![ScreenRecording_10-26-202417-47-14_1-ezgif com-optimize](https://github.com/user-attachments/assets/2dccd6a1-0acb-4b65-90bc-3b51159aa19e)
+
 ## How to Use
 Simply call HKRingView from a view you want to contain it.  
 HKRingView has two Named, required arguments:  
