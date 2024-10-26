@@ -12,7 +12,7 @@ import HealthKit
 struct Fitness_Like_HKRingApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HKRingExampleView()
         }
     }
 

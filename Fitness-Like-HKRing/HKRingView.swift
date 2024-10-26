@@ -11,39 +11,39 @@ import HealthKitUI
 
 struct ActivityRingView: UIViewRepresentable {
     var activitySummary: HKActivitySummary
-    let width: CGFloat
-    let height: CGFloat
+    let radius: CGFloat
     
     func makeUIView(context: Context) -> HKActivityRingView {
-        let frame = CGRect(x: 0, y: 0, width: width, height: height)
+        let frame = CGRect(x: 0, y: 0, width: radius, height: radius)
         let hkView = HKActivityRingView(frame: frame)
         return hkView
     }
     
     func updateUIView(_ uiView: UIViewType, context: Context) {
+        // Use uiView.activitySummary = HKActivitySummary or .setActivitySummary(HKActivitySummary, animated: false) to disable animation
         uiView.setActivitySummary(self.activitySummary, animated: true)
     }
 }
 
 struct HKRingView: View {
     @Binding var daysAgo: Int
-    @State var activitySummary: HKActivitySummary = HKActivitySummary()
-    let hkStore = HKHealthStore()
+    @State private var activitySummary: HKActivitySummary = HKActivitySummary()
     
-    let width: CGFloat
-    let height: CGFloat
+    let radius: CGFloat
+    
+    let hkStore = HKHealthStore()
     
     var body: some View {
         VStack {
-            ActivityRingView(activitySummary: self.activitySummary, width: self.width, height: self.height)
-                .frame(width: self.width, height: self.height)
+            ActivityRingView(activitySummary: self.activitySummary, radius: self.radius)
+                .frame(width: self.radius, height: self.radius)
         }
         .onAppear {
             queryHKSummary(daysAgo: self.daysAgo) { summary in
                 self.activitySummary = summary
             }
         }
-        .onChange(of: daysAgo) {
+        .onChange(of: daysAgo) { _ in // Use .onChange(of: daysAgo) {} instead targetting iOS 17+
             queryHKSummary(daysAgo: self.daysAgo) { summary in
                 self.activitySummary = summary
             }
@@ -51,7 +51,6 @@ struct HKRingView: View {
     }
     
     func queryHKSummary(daysAgo: Int = 0, completion: @escaping (HKActivitySummary) -> Void) {
-        print("Querying")
         let calendar = Calendar.autoupdatingCurrent
         let priorDate = calendar.date(byAdding: .day, value: -daysAgo, to: Date())!
         var dateComponents = calendar.dateComponents([.year, .month, .day], from: priorDate)
@@ -78,5 +77,5 @@ struct HKRingView: View {
 #Preview {
     let s = HKActivitySummary()
     @State var val = 0
-    HKRingView(daysAgo: $val, width: 300, height: 300)
+    HKRingView(daysAgo: $val, radius: 300)
 }
