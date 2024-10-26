@@ -43,7 +43,7 @@ struct HKRingView: View {
                 self.activitySummary = summary
             }
         }
-        .onChange(of: daysAgo) { _ in // Use .onChange(of: daysAgo) {} instead targetting iOS 17+
+        .onChange(of: daysAgo) { _ in
             queryHKSummary(daysAgo: self.daysAgo) { summary in
                 self.activitySummary = summary
             }
