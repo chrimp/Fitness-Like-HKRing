@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import HealthKit
 
 @main
 struct Fitness_Like_HKRingApp: App {
@@ -14,4 +15,5 @@ struct Fitness_Like_HKRingApp: App {
             ContentView()
         }
     }
+
 }
